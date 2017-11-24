@@ -3,7 +3,7 @@ Removes heads up notifications while in rhythm games (School Idol Festival, Star
 
 ![](https://i.imgur.com/uvjwVZv.jpg)
 
-### [Download for Android](https://github.com/Vazkii/RubySleeper/releases) (Requires Root)
+### [Download for Android](https://github.com/Vazkii/RubySleeper/releases/latest) (Requires Root)
 
 ---
 
