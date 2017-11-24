@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RubySleeper</string>
+    <string name="accessibility_desc">Allows RubySleeper to see what app is in the foreground.</string>
+</resources>
