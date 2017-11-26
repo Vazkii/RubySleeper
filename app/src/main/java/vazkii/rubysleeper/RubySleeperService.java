@@ -1,7 +1,6 @@
 package vazkii.rubysleeper;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.ComponentName;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -27,8 +26,22 @@ public class RubySleeperService extends AccessibilityService {
     private static final List<Pattern> DISABLED_APPS = Arrays.asList(
             Pattern.compile("klb\\.android\\.lovelive"), // School Idol Festival
             Pattern.compile("com\\.rayark"), // Cytus, Deemo, VOEZ
-            Pattern.compile("jp\\.co\\.bandainamcoent\\.BNEI0242"), // Starlight Stage
-            Pattern.compile("jp\\.co\\.craftegg\\.band") // Girls Band Party
+            Pattern.compile("co\\.bandainamcoent\\.BNEI0242"), // Starlight Stage
+            Pattern.compile("co\\.craftegg\\.band") // Girls Band Party
+            Pattern.compile("com\\.bandainamcoent\\.imas_millionlive_theaterdays"), // Theater Days
+            Pattern.compile("donuts(.*)\\.t7s"), // Tokyo 7th Sisters
+            Pattern.compile("co\\.bandainamcoonline\\.idolish7"), // IDOLiSH 7
+            Pattern.compile("co\\.cyberagent\\.gfonpu"), // Girl Friend Beta
+            Pattern.compile("com\\.bandainamcoent\\.aktpos"), // Aikatsu: Photo on Stage
+            Pattern.compile("co\\.happyelements\\.boys"), // Ensenble Stars
+            Pattern.compile("com\\.klab\\.utapri\\.shininglive"), // Shining Live
+            Pattern.compile("com\\.dena\\.a12024374"), // Uta Macross
+            Pattern.compile("com\\.ponycanyon\\.game\\.prismstep"), // Prism Step
+            Pattern.compile("com\\.bandainamcoent\\.imas_SideM_LIVEONSTAGE"), // SideM
+            Pattern.compile("com\\.dmm\\.games\\.legenne"), // Legenne
+            Pattern.compile("app\\.ebs$"), // 8 beat Story
+            Pattern.compile("dalcomsoft\\.ss\\.jyp"), // SuperStar JYPNATION
+            Pattern.compile("dalcomsoft\\.superstar\\.a") // SuperStar SMTOWN
     );
 
     @Override
@@ -74,7 +87,7 @@ public class RubySleeperService extends AccessibilityService {
                         notificationsEnabled = enable;
                     }
                 }
-            } catch(PackageManager.NameNotFoundException e) {}
+            } catch(PackageManager.NameNotFoundException e) { }
         }
     }
 
