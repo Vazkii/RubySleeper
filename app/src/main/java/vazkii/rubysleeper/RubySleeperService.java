@@ -2,6 +2,9 @@ package vazkii.rubysleeper;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.content.ComponentName;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
@@ -54,18 +57,24 @@ public class RubySleeperService extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             String pkg = event.getPackageName().toString();
+            ComponentName componentName = new ComponentName(pkg, event.getClassName().toString());
+            try {
+                ActivityInfo activityInfo = getPackageManager().getActivityInfo(componentName, 0);
 
-            boolean enable = true;
-            for(Pattern p : DISABLED_APPS)
-                if(p.matcher(pkg).find()) {
-                    enable = false;
-                    break;
+                if(activityInfo != null) {
+                    boolean enable = true;
+                    for(Pattern p : DISABLED_APPS)
+                        if(p.matcher(pkg).find()) {
+                            enable = false;
+                            break;
+                        }
+
+                    if(notificationsEnabled != enable) {
+                        setNotifications(enable ? 1 : 0);
+                        notificationsEnabled = enable;
+                    }
                 }
-
-            if(notificationsEnabled != enable) {
-                setNotifications(enable ? 1 : 0);
-                notificationsEnabled = enable;
-            }
+            } catch(PackageManager.NameNotFoundException e) {}
         }
     }
 
