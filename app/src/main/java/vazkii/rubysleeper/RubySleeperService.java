@@ -19,10 +19,13 @@ import java.util.regex.Pattern;
 // Taken from https://stackoverflow.com/questions/3873659/android-how-can-i-get-the-current-foreground-activity-from-a-service/27642535#27642535
 public class RubySleeperService extends AccessibilityService {
 
+    private static final String MESSENGER_ID = "com.facebook.orca";
+
     public static boolean connected = false;
     private static DataOutputStream su;
 
     private static boolean notificationsEnabled = true;
+    private static boolean facebookMessenger = false;
 
     private static final List<Pattern> DISABLED_APPS = Arrays.asList(
             Pattern.compile("klb\\.android\\.lovelive"), // School Idol Festival
@@ -58,6 +61,7 @@ public class RubySleeperService extends AccessibilityService {
 
         setServiceInfo(config);
 
+        Log.i("RubySleeper", "Accessibility Service Enabled");
         boolean root = getRoot();
         if(!root)
             Toast.makeText(this, "RubySleeper can not run without Root.", Toast.LENGTH_LONG).show();
@@ -70,6 +74,7 @@ public class RubySleeperService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Log.i("RubySleeper", "Access");
             String pkg = event.getPackageName().toString();
             ComponentName componentName = new ComponentName(pkg, event.getClassName().toString());
             try {
@@ -83,8 +88,14 @@ public class RubySleeperService extends AccessibilityService {
                             break;
                         }
 
+                    Log.i("RubySleeper", "Opened " + pkg);
+                    if(pkg.equals(MESSENGER_ID)) {
+                        facebookMessenger = true;
+                        Log.i("RubySleeper", "Facebook messenger has been loaded!");
+                    }
+
                     if(notificationsEnabled != enable) {
-                        setNotifications(enable ? 1 : 0);
+                        setNotifications(enable);
                         notificationsEnabled = enable;
                     }
                 }
@@ -113,13 +124,21 @@ public class RubySleeperService extends AccessibilityService {
         return hasRoot;
     }
 
-    private void setNotifications(int setting) {
-        String command = "settings put global heads_up_notifications_enabled " + setting;
+    private void setNotifications(boolean setting) {
         boolean executed = false;
         try {
             if(getRoot()) {
+                String command = "settings put global heads_up_notifications_enabled " + (setting ? 1 : 0);
                 su.writeBytes(command);
                 su.writeBytes("\n");
+
+                if(facebookMessenger) {
+                    String option = setting ? "grant" : "revoke";
+                    command = String.format("pm %s %s android.permission.SYSTEM_ALERT_WINDOW", option, MESSENGER_ID);
+                    su.writeBytes(command);
+                    su.writeBytes("\n");
+                }
+
                 su.flush();
                 executed = true;
             }
