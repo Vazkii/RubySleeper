@@ -1,6 +1,8 @@
 # RubySleeper
 Removes heads up notifications while in rhythm games (School Idol Festival, Starlight Stage, etc)
 
+As of 1.0.2, it also disables Facebook Messenger chat bubbles while playing.
+
 ![](https://i.imgur.com/uvjwVZv.jpg)
 
 ### [Download for Android](https://github.com/Vazkii/RubySleeper/releases/latest) (Requires Root)
