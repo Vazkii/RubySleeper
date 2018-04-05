@@ -32,6 +32,7 @@ public class RubySleeperService extends AccessibilityService {
             Pattern.compile("com\\.rayark"), // Cytus, Deemo, VOEZ
             Pattern.compile("co\\.bandainamcoent\\.BNEI0242"), // Starlight Stage
             Pattern.compile("co\\.craftegg\\.band"), // Girls Band Party
+            Pattern.compile("com\\.bushiroad\\.en\\.bangdreamgbp"), // Girls Band Party (EN)
             Pattern.compile("com\\.bandainamcoent\\.imas_millionlive_theaterdays"), // Theater Days
             Pattern.compile("donuts(.*)\\.t7s"), // Tokyo 7th Sisters
             Pattern.compile("co\\.bandainamcoonline\\.idolish7"), // IDOLiSH 7
